@@ -1,0 +1,14 @@
+services:
+  spoolsense:
+    image: jaconah/spoolsense:latest
+    build:
+      context: .
+    container_name: spoolsense
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: ./.env
+        required: false
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped

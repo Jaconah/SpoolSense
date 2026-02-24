@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# Node
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# Database / user data
+backend/data/
+data/
+
+# Environment
+.env
+**/.env
+backend/.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local dev data copies
+pc_ccopy/
+
+# Logs
+*.log
+
+# AI agent / developer-only files (not for public repo)
+.claude/
+plans/
+docs/
+CLAUDE.md
+data.zip
