@@ -59,9 +59,11 @@ def _setup_file_logging() -> None:
     file_handler.addFilter(_FileFilter())
 
     root = logging.getLogger()
+    root.setLevel(logging.INFO)
     root.addHandler(file_handler)
 
 
+logging.getLogger().setLevel(logging.INFO)
 _setup_file_logging()
 
 _access_logger = logging.getLogger("app.access")
@@ -72,6 +74,15 @@ _DEFAULT_PASSWORD_HASH = "$2b$12$2eOdcHAumeU4XnIhUClmgelK2b4LOmf3yOknQEOp7Kd4QxL
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Ensure app-level logs (scheduler, webhook, etc.) appear in Docker output.
+    # Uvicorn only attaches handlers to its own loggers, not root.
+    _root = logging.getLogger()
+    _root.setLevel(logging.INFO)
+    if not any(type(h) is logging.StreamHandler for h in _root.handlers):
+        _h = logging.StreamHandler()
+        _h.setFormatter(logging.Formatter("%(levelname)s:%(name)s:%(message)s"))
+        _root.addHandler(_h)
+
     import secrets as _secrets
 
     # Create all tables
